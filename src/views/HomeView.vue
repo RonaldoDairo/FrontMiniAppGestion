@@ -36,7 +36,7 @@
                           <i class="fa-solid fa-edit"></i>
                         </router-link>
                         &nbsp;
-                        <button class="btn btn-danger">
+                        <button class="btn btn-danger" v-on:click="deleteStudent(est.id,est.nombre)">
                           <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios';
+import { confirm } from '../functions'
 
 export default {
 
@@ -70,10 +71,14 @@ export default {
       axios.get("http://miniappgestion.test/api/v1/estudiantes").then(
         res =>{
           this.students = res.data;
-          this.loading = false
+          this.loading = false;
         }
       );
-   }
+   },
+   deleteStudent(id,name){
+    confirm('http://miniappgestion.test/api/v1/estudiantes/',id,'Delete student',`Do you want really to eliminate ${name}?`),
+    this.loading=false;
   }
+}
 }
 </script>
