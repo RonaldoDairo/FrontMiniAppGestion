@@ -49,7 +49,7 @@ export default{
   methods:{
     register(){
       event.preventDefault();
-      var miFoto = document.getElementById('fotoimg');
+      let miFoto = document.getElementById('fotoimg');
       this.foto = miFoto.src;
 
       if(this.nombre.trim()===''){
@@ -57,16 +57,16 @@ export default{
       }else if(this.apellido.trim()===''){
         showAlert('Ingrese un apellido','warning','apellido');
       }else{
-        var parametros = {nombre:this.nombre.trim(),apellido:this.apellido.trim(),foto:this.foto.trim()}
+        let parametros = {nombre:this.nombre.trim(),apellido:this.apellido.trim(),foto:this.foto.trim()}
         sendRequest('POST',parametros,this.url,'Estudiante registrado!!!');
       }
       
     },
     previewPhoto(event){
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = function(){
-        var miFoto = document.getElementById('fotoimg');
+        let miFoto = document.getElementById('fotoimg');
         miFoto.src = reader.result;
         this.foto =miFoto.src;
       }
