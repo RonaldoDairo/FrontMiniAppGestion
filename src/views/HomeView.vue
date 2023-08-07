@@ -22,17 +22,17 @@
                     <td v-text="est.id"></td>
                     <td>
                       <img v-if="est.foto" style="width: 150px !important;" :src="est.foto" class="img-thumbnail" alt="">
-                      <img v-else style="width: 150px !important;" src="https://cdn1.iconfinder.com/data/icons/users-100/32/ic-users-add-128.png" class="img-thumbnail" alt="">
+                      <img v-else style="width: 150px !important;" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-512.png" alt="">
                     </td>
                     <td v-text="est.nombre"></td>
                     <td v-text="est.apellido"></td>
                     <td v-text="new Date(est.created_at).toLocaleDateString('en-US')"></td>
                     <td>
-                        <router-link :to="{path:`view/${est.id}`}" class="btn btn-info">
+                        <router-link :to="{path:`viewStudent/${est.id}`}" class="btn btn-info">
                           <i class="fa-solid fa-eye"></i>
                         </router-link>
                         &nbsp;
-                        <router-link :to="{path:`edit/${est.id}`}" class="btn btn-warning">
+                        <router-link :to="{path:`editStudent/${est.id}`}" class="btn btn-warning">
                           <i class="fa-solid fa-edit"></i>
                         </router-link>
                         &nbsp;
@@ -76,7 +76,11 @@ export default {
       );
    },
    deleteStudent(id,name){
-    confirm('http://miniappgestion.test/api/v1/estudiantes/',id,'Delete student',`Do you want really to eliminate ${name}?`),
+    confirm('http://miniappgestion.test/api/v1/estudiantes/',
+    id,
+    'Delete student',
+    `Do you want really to eliminate ${name}?`,
+    'question'),
     this.loading=false;
   }
 }

@@ -34,16 +34,13 @@ export function confirm(url,id,title,message){
                 showAlert('Operation canceled', 'info');
             }
         });  
-    
-
-   
 }
 
 export function sendRequest(method,params,url,message){
     axios({method:method, url:url, data:params}).then(function(res){
         let status = res.status;
         if (status == 200){
-            showAlert('Deleted successfully', message);
+            showAlert(message);
             window.setTimeout(function() {
                 window.location.href = '/'
             },1000);

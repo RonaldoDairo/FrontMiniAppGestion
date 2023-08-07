@@ -1,5 +1,76 @@
 <template>
-    <div class="about">
-      <h1>New</h1>
-    </div>
-  </template>
+  <div class="row mt-3">
+  <div  class="col-md-6 offset-md-3">
+      <div class="card">
+          <div class="card-header bg-dark text-white text-center">
+              Register Student
+          </div>
+          <div class="card-body">
+              <form @submit="register">
+                <div class="d-grid col-6 mx-auto mb-3">
+                  <img v-if="this.foto" height="100" :src="this.foto" id="fotoimg" class="img-thumbnail" alt="">
+                  <img v-else height="100" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-512.png" class="img-thumbnail" id="fotoimg" alt="">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" v-model="nombre" id="nombre" placeholder="Insert your name" required maxlength="50" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" v-model="apellido" id="apellido" placeholder="Insert your lastname" required maxlength="50" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-gift"></i></span>
+                  <input @change="previewPhoto" type="file" accept="image/png, image/jpeg, image/gif" class="form-control">
+                </div>
+                <div class="d-grid col-6 mx-auto mb-3">
+                 <button class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Register</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+</template>
+
+<script>
+import { showAlert, sendRequest } from '../functions'
+
+export default{
+  data(){
+    return{
+      nombre:'',
+      apellido:'',
+      foto:'',
+      url:'http://miniappgestion.test/api/v1/estudiantes',
+      cargando:false
+    }
+  },
+  methods:{
+    register(){
+      event.preventDefault();
+      var miFoto = document.getElementById('fotoimg');
+      this.foto = miFoto.src;
+
+      if(this.nombre.trim()===''){
+        showAlert('Ingrese un nombre','warning','nombre');
+      }else if(this.apellido.trim()===''){
+        showAlert('Ingrese un apellido','warning','apellido');
+      }else{
+        var parametros = {nombre:this.nombre.trim(),apellido:this.apellido.trim(),foto:this.foto.trim()}
+        sendRequest('POST',parametros,this.url,'Estudiante registrado!!!');
+      }
+      
+    },
+    previewPhoto(event){
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = function(){
+        var miFoto = document.getElementById('fotoimg');
+        miFoto.src = reader.result;
+        this.foto =miFoto.src;
+      }
+    }
+  }
+}
+</script>
